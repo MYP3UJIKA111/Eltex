@@ -1,5 +1,4 @@
 CC = gcc
-# Изменено c99 на gnu17 для поддержки современных стандартов POSIX
 CFLAGS = -Wall -Wextra -std=gnu17
 TARGET = copier
 
@@ -15,4 +14,6 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TARGET) *.copy my_fifo
+	rm -f $(OBJS) $(TARGET) *.copy *_to_parent *_to_child
+
+.PHONY: all clean

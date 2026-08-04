@@ -1,4 +1,3 @@
-// parent.h
 #ifndef PARENT_H
 #define PARENT_H
 #include "pipe_utils.h"

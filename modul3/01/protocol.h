@@ -4,7 +4,7 @@
 #include <sys/types.h> // Для off_t, ssize_t
 
 #define MAX_FILENAME 1024
-#define BLOCK_SIZE 1024
+#define BLOCK_SIZE 4096  // Увеличен для эффективности
 
 #define MSG_READY 0x11
 #define MSG_FILE  0x22

@@ -1,4 +1,3 @@
-// pipe_utils.h
 #ifndef PIPE_UTILS_H
 #define PIPE_UTILS_H
 
@@ -9,7 +8,8 @@ typedef struct {
     int fd_read;
     int fd_write;
     int mode;
-    char name[256];
+    char name_to_parent[256];  // Имя FIFO для передачи от child к parent
+    char name_to_child[256];   // Имя FIFO для передачи от parent к child
     
     // Для неименованных каналов нужны два pipe
     int p2c[2]; // parent to child
