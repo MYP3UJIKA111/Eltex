@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 -Iinclude
+CFLAGS = -Wall -Wextra -O2 -std=gnu11 -Iinclude
 LDFLAGS = 
 
 SRC_DIR = src
@@ -16,7 +16,7 @@ $(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c include/broker.h
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -30,6 +30,6 @@ run-publisher: $(TARGET)
 	$(TARGET) -p news
 
 run-subscriber: $(TARGET)
-	$(TARGET) -s news
+	$(TARGET) -s news weather
 
 .PHONY: all clean run-broker run-publisher run-subscriber
