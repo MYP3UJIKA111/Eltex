@@ -1,0 +1,207 @@
+$ LOG="${USER}_part.log"
+compgen -c ls | sort -u
+ls
+lsattr
+lsblk
+lsb_release
+lscpu
+lsfd
+lsinitramfs
+lsipc
+lsirq
+lslocks
+lslogins
+lsmem
+lsmod
+lsns
+lsof
+lspci
+lsusb
+compgen -v HIST | sort -u
+HISTCMD
+HISTCONTROL
+HISTFILE
+HISTFILESIZE
+HISTSIZE
+HISTTIMEFORMAT
+echo "HISTSIZE=$HISTSIZE HISTFILESIZE=$HISTFILESIZE"
+HISTSIZE=1000 HISTFILESIZE=2000
+find "$HOME" -maxdepth 1 -name ".*" -printf "%f\n" | sort
+.bash_history
+.bash_logout
+.bashrc
+.config
+.log
+.profile
+.ssh
+.viminfo
+export HISTTIMEFORMAT="%F %T "
+history | tail -n 10
+   80  2026-08-19 14:26:25 echo 'echo "HISTSIZE=$HISTSIZE HISTFILESIZE=$HISTFILESIZE"' >> "$LOG"
+   81  2026-08-19 14:26:45 echo "HISTSIZE=$HISTSIZE HISTFILESIZE=$HISTFILESIZE" | clean >> "$LOG"
+   82  2026-08-19 14:27:08 echo "HISTSIZE=$HISTSIZE HISTFILESIZE=$HISTFILESIZE"
+   83  2026-08-19 14:27:46 echo 'find "$HOME" -maxdepth 1 -name ".*" -printf "%f\n" | sort' >> "$LOG"
+   84  2026-08-19 14:27:58 find "$HOME" -maxdepth 1 -name '.*' -printf '%f\n' 2>/dev/null | sort | clean >> "$LOG"
+   85  2026-08-19 14:28:13 find "$HOME" -maxdepth 1 -name ".*" -printf "%f\n" | sort
+   86  2026-08-19 14:32:42 echo 'export HISTTIMEFORMAT="%F %T "' >> "$LOG"
+   87  2026-08-19 14:32:52 export HISTTIMEFORMAT="%F %T "
+   88  2026-08-19 14:33:02 echo 'history | tail -n 10' >> "$LOG"
+   89  2026-08-19 14:33:11 history | tail -n 10 | clean >> "$LOG"
+# проверка ДО настройки автосохранения
+date
+tail -n 3 ~/.bash_history
+screen -ls
+#1787120735
+ls -lah
+screen -ls
+#1787120735
+ls -lah
+shopt -s histappend
+export PROMPT_COMMAND="history -a"
+# проверка ПОСЛЕ настройки
+tail -n 3 ~/.bash_history
+echo '# проверка ПОСЛЕ настройки' >> "$LOG"
+#1787125830
+echo 'tail -n 3 ~/.bash_history' >> "$LOG"
+#1787125684
+export PROMPT_COMMAND="history -a"
+#1787125814
+date
+#1787125824
+echo '# проверка ПОСЛЕ настройки' >> "$LOG"
+#1787125830
+echo 'tail -n 3 ~/.bash_history' >> "$LOG"
+#1787125848
+tail -n 3 ~/.bash_history 2>/dev/null  >> "$LOG"
+history | tail -n 5
+  105  2026-08-19 14:50:30 echo 'tail -n 3 ~/.bash_history' >> "$LOG"
+  106  2026-08-19 14:50:48 tail -n 3 ~/.bash_history 2>/dev/null  >> "$LOG"
+  107  2026-08-19 14:54:25 tail -n 10 ~/.bash_history 2>/dev/null  >> "$LOG"
+  108  2026-08-19 14:54:40 echo 'history | tail -n 5' >> "$LOG"
+  109  2026-08-19 14:54:46 history | tail -n 5 | clean >> "$LOG"
+grep -n "^date$" ~/.bash_history
+193:date
+211:date
+  111  2026-08-19 14:55:08 grep -n '^date$' ~/.bash_history | clean >> "$LOG"
+  112  2026-08-19 15:00:49 whoami
+  113  2026-08-19 15:01:06 tail -n 5 ~/.bash_history 2>/dev/null
+  114  2026-08-19 15:01:33 history | tail -n 5
+  115  2026-08-19 15:02:27 history | tail -n 5 | clean >> "$LOG"
+DATE=$(date +%F)
+echo "$DATE"
+2026-08-19
+TIME=$(date +%T)
+echo "$TIME"
+15:06:45
+DATE_TIME="$DATE $TIME"
+echo "$DATE_TIME"
+2026-08-19 15:06:45
+b2sum
+base32
+base64
+bunzip2
+bzip2
+bzip2recover
+c89-gcc
+c99-gcc
+cpan5.36-x86_64-linux-gnu
+diff3
+dumpe2fs
+e2freefrag
+e2fsck
+e2image
+e2scrub
+e2scrub_all
+e2undo
+e4crypt
+e4defrag
+enc2xs
+grub-menulst2cfg
+grub-mkpasswd-pbkdf2
+grub-syslinux2cfg
+h2ph
+h2xs
+killall5
+md5sum
+mke2fs
+perl5.36.0
+perl5.36-x86_64-linux-gnu
+pl2pm
+pod2html
+pod2man
+pod2text
+pod2usage
+py3clean
+py3compile
+pydoc3.11
+pygettext3.11
+python3.11
+resize2fs
+sha1sum
+sha224sum
+sha256sum
+sha384sum
+sha512sum
+ssh-argv0
+systemd-id128
+tune2fs
+x86_64-linux-gnu-addr2line
+x86_64-linux-gnu-ar
+x86_64-linux-gnu-as
+x86_64-linux-gnu-c++filt
+x86_64-linux-gnu-cpp-12
+x86_64-linux-gnu-dwp
+x86_64-linux-gnu-elfedit
+x86_64-linux-gnu-gcc-12
+x86_64-linux-gnu-gcc-ar-12
+x86_64-linux-gnu-gcc-nm-12
+x86_64-linux-gnu-gcc-ranlib-12
+x86_64-linux-gnu-gcov-12
+x86_64-linux-gnu-gcov-dump-12
+x86_64-linux-gnu-gcov-tool-12
+x86_64-linux-gnu-gp-archive
+x86_64-linux-gnu-gp-collect-app
+x86_64-linux-gnu-gp-display-html
+x86_64-linux-gnu-gp-display-src
+x86_64-linux-gnu-gp-display-text
+x86_64-linux-gnu-gprof
+x86_64-linux-gnu-gprofng
+x86_64-linux-gnu-ld.bfd
+x86_64-linux-gnu-ld.gold
+x86_64-linux-gnu-lto-dump-12
+x86_64-linux-gnu-nm
+x86_64-linux-gnu-objcopy
+x86_64-linux-gnu-objdump
+x86_64-linux-gnu-ranlib
+x86_64-linux-gnu-readelf
+x86_64-linux-gnu-size
+x86_64-linux-gnu-strings
+x86_64-linux-gnu-strip
+export PS1="\u@\h-\$(date +%H:%M)> "
+echo "$PS1"
+\u@\h-$(date +%H:%M)> 
+# до настройки
+bash --norc -i -c "echo PS1 в дочернем bash: [$PS1]"
+PS1 в дочернем bash: [\s-\v\$ ]
+export PS1
+export -p | grep "declare -x PS1="
+declare -x PS1="\\u@\\h-\$(date +%H:%M)> "
+# после настройки
+bash --norc -i -c "echo PS1 в дочернем bash: [$PS1]"
+PS1 в дочернем bash: [\u@\h-$(date +%H:%M)> ]
+bash --norc
+(приглашение в дочернем bash совпало с родительским)
+mkdir -p $(date +%Y)-{01..12}
+ls --color=never -d $(date +%Y)-*
+2026-01
+2026-02
+2026-03
+2026-04
+2026-05
+2026-06
+2026-07
+2026-08
+2026-09
+2026-10
+2026-11
+2026-12

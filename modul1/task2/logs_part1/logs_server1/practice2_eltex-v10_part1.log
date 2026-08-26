@@ -1,0 +1,52 @@
+Начало практики 2, вариант 10, чистый старт
+MYUSER=eltex-v10 SRV2_IP=172.16.9.184
+Wed Aug 19 09:41:08 PM +07 2026
+=== Пункт 1: создание SSH-ключа ===
+ssh-keygen -t ed25519 -f ~/.ssh/practice2_key -N ''
+Generating public/private ed25519 key pair.
+Your identification has been saved in /home/eltex-v10/.ssh/practice2_key
+Your public key has been saved in /home/eltex-v10/.ssh/practice2_key.pub
+The key fingerprint is:
+SHA256:eDzirYTPFpc/SFk7RnqWwiPZ1nzyP8a/8ugMsTZUROo eltex-v10@eltex-2026-summer
+The key's randomart image is:
++--[ED25519 256]--+
+|            .o   |
+|            o    |
+|           . .   |
+|       o  + .    |
+|      o+SO E     |
+|     o++%.% +    |
+|    . o*.O X .   |
+|     +... + =.=  |
+|     .+    ..*+=o|
++----[SHA256]-----+
+ls -l ~/.ssh/practice2_key*
+-rw------- 1 eltex-v10 eltex-v10 419 Aug 19 21:44 /home/eltex-v10/.ssh/practice2_key
+-rw-r--r-- 1 eltex-v10 eltex-v10 109 Aug 19 21:44 /home/eltex-v10/.ssh/practice2_key.pub
+cat ~/.ssh/practice2_key.pub
+=== Пункт 2: ssh-copy-id ===
+ssh-copy-id -i ~/.ssh/practice2_key.pub root@172.16.9.184
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/eltex-v10/.ssh/practice2_key.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@172.16.9.184'"
+and check to make sure that only the key(s) you wanted were added.
+
+=== Пункт 3: сравнение ключей ===
+Права на server1:
+600 /home/eltex-v10/.ssh/practice2_key
+644 /home/eltex-v10/.ssh/practice2_key.pub
+Содержимое публичного ключа:
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxfPs+mTfoEghq2tPptFjXobxSy7YJkFZInK3mWOe5s eltex-v10@eltex-2026-summer
+Права на server2:
+700 /root/.ssh
+600 /root/.ssh/authorized_keys
+Содержимое authorized_keys на server2:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDUOQ4DXt0nlRX+VRyoWKW4vjk7Y18i+0ntGhgaPXe9yINeJmmvMgePjvMKEUOjM3l2SgUhqe1K+LedR+mmThSmQ+ZNgfkjqxmATVEZKrh8IUc7wPUiGiVTMkll+JvYQUL90kht+qrOIMU3zfq0LU33bQyCjyAiNwyHUSLr8oM2IRvuZqaQHdpWRfsaTkmsx1+cCYYa5sLPbqDo01qQPSo6xEZnVJla/BLjcOFvgsh9bBFJApjS5rrhKiFqmEXpSHIYE1wdXUs+r20QPkustFXm0UI5vs9TGYTlHTEQjD6Slwt0W328CH8uaNBOJqIO/6gIMZ4c0kUzApmpCsHIpgfnZLMHdn8RhSp4mH3XUyJjxVI1KJK8ZhhB16bAhmRIWeZAnNC81i+ugtzuidwdt9GZR9d7/Bvfa/2ivTFGfFvjPmzBcTUwKamM1xTM3Cl2/2ouw61YUrbUiZLTnmkHcRzXZ3Zh3lOm5izSjRoNuYXWIf9rDKkKZEtjJ0xNILRxzn0= eltex-v10@eltex-2026-summer
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxfPs+mTfoEghq2tPptFjXobxSy7YJkFZInK3mWOe5s eltex-v10@eltex-2026-summer
+Проверка входа:
+eltex-practice2-v10
+root

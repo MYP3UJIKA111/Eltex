@@ -1,0 +1,118 @@
+cd
+LOG3="${USER}_part3.log"; : > "$LOG3"
+mkdir -p D1/D2/D3
+ls -ld --color=never D1 D1/D2 D1/D2/D3
+drwxr-xr-x 3 eltex-v10 eltex-v10 4096 Aug 19 18:26 D1
+drwxr-xr-x 3 eltex-v10 eltex-v10 4096 Aug 19 18:26 D1/D2
+drwxr-xr-x 2 eltex-v10 eltex-v10 4096 Aug 19 18:26 D1/D2/D3
+touch D1/D2/file.txt
+ls -l --color=never D1/D2
+total 4
+drwxr-xr-x 2 eltex-v10 eltex-v10 4096 Aug 19 18:26 D3
+-rw-r--r-- 1 eltex-v10 eltex-v10    0 Aug 19 18:28 file.txt
+echo "Пример текста тестового для file.txt, создан $(date)" >> D1/D2/file.txt
+cat D1/D2/file.txt
+Пример текста тестового для file.txt, создан Wed Aug 19 06:37:55 PM +07 2026
+ln -s ../file.txt D1/D2/D3/symlink_to_file.txt
+ln D1/D2/file.txt D1/D2/D3/hardlink_to_file.txt
+total 4
+262365 -rw-r--r-- 2 eltex-v10 eltex-v10 107 Aug 19 18:37 hardlink_to_file.txt
+262366 lrwxrwxrwx 1 eltex-v10 eltex-v10  11 Aug 19 18:39 symlink_to_file.txt -> ../file.txt
+ls -li D1/D2/ D1/D2/D3/
+D1/D2/:
+total 8
+262363 drwxr-xr-x 2 eltex-v10 eltex-v10 4096 Aug 19 18:40 D3
+262365 -rw-r--r-- 2 eltex-v10 eltex-v10  107 Aug 19 18:37 file.txt
+
+D1/D2/D3/:
+total 4
+262365 -rw-r--r-- 2 eltex-v10 eltex-v10 107 Aug 19 18:37 hardlink_to_file.txt
+262366 lrwxrwxrwx 1 eltex-v10 eltex-v10  11 Aug 19 18:39 symlink_to_file.txt -> ../file.txt
+stat D1/D2/file.txt D1/D2/D3/hardlink_to_file.txt D1/D2/D3/symlink_to_file.txt | grep -E "File:|Inode"
+  File: D1/D2/file.txt
+Device: 254,2	Inode: 262365      Links: 2
+  File: D1/D2/D3/hardlink_to_file.txt
+Device: 254,2	Inode: 262365      Links: 2
+  File: D1/D2/D3/symlink_to_file.txt -> ../file.txt
+Device: 254,2	Inode: 262366      Links: 1
+readlink D1/D2/D3/symlink_to_file.txt
+../file.txt
+cat D1/D2/D3/hardlink_to_file.txt
+Пример текста тестового для file.txt, создан Wed Aug 19 06:37:55 PM +07 2026
+cat D1/D2/D3/symlink_to_file.txt
+Пример текста тестового для file.txt, создан Wed Aug 19 06:37:55 PM +07 2026
+mv D1/D2/file.txt D1/
+total 8
+262317 drwxr-xr-x 3 eltex-v10 eltex-v10 4096 Aug 19 19:01 D2
+262365 -rw-r--r-- 2 eltex-v10 eltex-v10  107 Aug 19 18:37 file.txt
+верхние две строки вывод команды: ls -li D1/
+cat D1/D2/D3/symlink_to_file.txt
+cat: D1/D2/D3/symlink_to_file.txt: No such file or directory
+cat D1/D2/D3/hardlink_to_file.txt
+Пример текста тестового для file.txt, создан Wed Aug 19 06:37:55 PM +07 2026
+ls -li --color=never D1/D2/D3
+total 4
+262365 -rw-r--r-- 2 eltex-v10 eltex-v10 107 Aug 19 18:37 hardlink_to_file.txt
+262366 lrwxrwxrwx 1 eltex-v10 eltex-v10  11 Aug 19 18:39 symlink_to_file.txt -> ../file.txt
+rm -rf D1/D2
+LOG_GT="${USER}_part3_gt20M.log"
+find / -xdev -type f -size +20M 2>/dev/null | sort > "${USER}_part3_gt20M.log"
+xargs -r du -h --apparent-size < "$LOG_GT"
+31M	/usr/bin/x86_64-linux-gnu-lto-dump-12
+32M	/usr/lib/gcc/x86_64-linux-gnu/12/cc1
+31M	/usr/lib/gcc/x86_64-linux-gnu/12/lto1
+30M	/usr/lib/x86_64-linux-gnu/libicudata.so.72.1
+39M	/var/cache/apt/pkgcache.bin
+39M	/var/cache/apt/srcpkgcache.bin
+48M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_binary-amd64_Packages
+32M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_i18n_Translation-en
+49M	/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_source_Sources
+32M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@000654e914b0fb5f-f20d94ab522960d7.journal~
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000009b91d-000653cc93c81e56.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000ab4ea-000653d77c5c1149.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000bb4ae-000653e0e464fbba.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000cb658-000653e97bef6d7f.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000db8c9-000653f1df947936.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000ebb8b-000653fa31acb7c1.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-00000000000fbec9-0006540279fb0af2.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000010c0ec-0006540b1cd179ef.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000011beb5-000654152c40ea73.journal
+44M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000012bd18-0006541efb4e910b.journal
+43M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000013b06c-000654303a1201f5.journal
+43M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@4f44ef78d53d4cd0a5555898b8d0015b-000000000014a0db-000654440c96a329.journal
+24M	/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system.journal
+head -n 10 "${USER}_part3_gt20M.log"
+/usr/bin/x86_64-linux-gnu-lto-dump-12
+/usr/lib/gcc/x86_64-linux-gnu/12/cc1
+/usr/lib/gcc/x86_64-linux-gnu/12/lto1
+/usr/lib/x86_64-linux-gnu/libicudata.so.72.1
+/var/cache/apt/pkgcache.bin
+/var/cache/apt/srcpkgcache.bin
+/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_binary-amd64_Packages
+/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_i18n_Translation-en
+/var/lib/apt/lists/deb.debian.org_debian_dists_bookworm_main_source_Sources
+/var/log/journal/8247b53b6ae84ae0ad9bb1c96113fd29/system@000654e914b0fb5f-f20d94ab522960d7.journal~
+find ~ -type f -mmin -1440
+/home/eltex-v10/.lesshst
+/home/eltex-v10/eltex-v10_part.log
+/home/eltex-v10/eltex-v10_part.log.bak
+/home/eltex-v10/D1/file.txt
+/home/eltex-v10/eltex-v10_part3.log
+/home/eltex-v10/.bash_history
+/home/eltex-v10/eltex-v10_part.log.bak2
+/home/eltex-v10/eltex-v10_part3_gt20M.log
+which find
+/usr/bin/find
+whereis find 
+find: /usr/bin/find /usr/share/man/man1/find.1.gz /usr/share/info/find.info-1.gz /usr/share/info/find.info-2.gz /usr/share/info/find.info.gz
+file $(which find)
+/usr/bin/find: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=5545a6c7162d325fbe5ffabcbfe4e5521b66ce70, for GNU/Linux 3.2.0, stripped
+ls -l --color=never /boot/initrd.img*
+-rw-r--r-- 1 root root 34206128 Mar 26 07:48 /boot/initrd.img-6.1.0-44-amd64
+-rw-r--r-- 1 root root 34207930 Jul  6 03:14 /boot/initrd.img-6.1.0-50-amd64
+file /boot/initrd.img*
+/boot/initrd.img-6.1.0-44-amd64: ASCII cpio archive (SVR4 with no CRC)
+/boot/initrd.img-6.1.0-50-amd64: ASCII cpio archive (SVR4 with no CRC)
+file -L /boot/initrd.img*
+/boot/initrd.img-6.1.0-44-amd64: ASCII cpio archive (SVR4 with no CRC)
+/boot/initrd.img-6.1.0-50-amd64: ASCII cpio archive (SVR4 with no CRC)

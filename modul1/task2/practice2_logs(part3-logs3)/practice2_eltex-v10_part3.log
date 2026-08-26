@@ -1,0 +1,502 @@
+=== Раздел 3 ===
+$ git config --global user.name MYP3UJIKA111
+$ git config --global user.email nastya_galashina12@mail.ru
+$ git config --global init.defaultBranch main
+$ git config --global --list
+user.name=MYP3UJIKA111
+user.email=nastya_galashina12@mail.ru
+init.defaultbranch=main
+$ apt update
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 http://ru.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://ru.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1,216 kB]
+Get:5 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1,683 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:10 http://ru.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5,776 B]
+Get:11 http://ru.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+Get:12 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [952 kB]
+Get:13 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+Get:14 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1,201 kB]
+Get:15 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+Fetched 6,140 kB in 2s (3,808 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+93 packages can be upgraded. Run 'apt list --upgradable' to see them.
+$ apt install -y git gh
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+git set to manually installed.
+The following NEW packages will be installed:
+  gh
+0 upgraded, 1 newly installed, 0 to remove and 93 not upgraded.
+Need to get 8,836 kB of archives.
+After this operation, 45.4 MB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 gh amd64 2.45.0-1ubuntu0.3 [8,836 kB]
+Fetched 8,836 kB in 1s (11.1 MB/s)
+Selecting previously unselected package gh.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 125729 files and directories currently installed.)
+Preparing to unpack .../gh_2.45.0-1ubuntu0.3_amd64.deb ...
+Unpacking gh (2.45.0-1ubuntu0.3) ...
+Setting up gh (2.45.0-1ubuntu0.3) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+$ git --version
+git version 2.43.0
+$ gh --version
+gh version 2.45.0 (2025-07-18 Ubuntu 2.45.0-1ubuntu0.3)
+https://github.com/cli/cli/releases/tag/v2.45.0
+$ ssh-keygen -t ed25519 -f /root/.ssh/github_key -N 
+Generating public/private ed25519 key pair.
+Your identification has been saved in /root/.ssh/github_key
+Your public key has been saved in /root/.ssh/github_key.pub
+The key fingerprint is:
+SHA256:y6t+i2Qfpb3TVZYaAYXRKLmr5VEt5dhBfDhGzZOxxsw root@eltex-practice2-v10
+The key's randomart image is:
++--[ED25519 256]--+
+|          .o@++.o|
+|         o o X+*.|
+|          o B =Eo|
+|         . + =..o|
+|        S + . oo |
+|       . O   ..  |
+|      o O o. .   |
+|     o +.+...    |
+|     .+o+...     |
++----[SHA256]-----+
+$ ls -l /root/.ssh/github_key /root/.ssh/github_key.pub
+-rw------- 1 root root 419 Aug 20 03:57 /root/.ssh/github_key
+-rw-r--r-- 1 root root 106 Aug 20 03:57 /root/.ssh/github_key.pub
+$ cat /root/.ssh/github_key.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcIZU63rz+Y9ymfH90UV5H/3Z6scf3p28jcWzlYWKMO root@eltex-practice2-v10
+$ git config --global --list
+user.name=MYP3UJIKA111
+user.email=nastya_galashina12@mail.ru
+init.defaultbranch=main
+$ git config --global --list
+user.name=MYP3UJIKA111
+user.email=nastya_galashina12@mail.ru
+init.defaultbranch=main
+$ gh auth setup-git --hostname github.com
+$ gh auth status
+github.com
+  ✓ Logged in to github.com account MYP3UJIKA111 (/root/.config/gh/hosts.yml)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+$ gh repo create --public practice2-eltex-v10
+https://github.com/MYP3UJIKA111/practice2-eltex-v10
+$ mkdir -p /root/practice2-eltex-v10
+$ bash -c cd ~/practice2-eltex-v10 && echo '# Practice 2 - Eltex' > README.md && echo 'Выполнил: Галашина Анастасия Викторовна' >> README.md && echo 'Логин GitHub: MYP3UJIKA111' >> README.md
+=== Дополнительные команды ===
+
+$ git config --global user.name "MYP3UJIKA111"
+$ git config --global user.email "nastya_galashina12@mail.ru"
+$ git config --global init.defaultBranch main
+$ git config --global --list
+user.name=MYP3UJIKA111
+user.email=nastya_galashina12@mail.ru
+init.defaultbranch=main
+
+$ apt update
+$ apt install -y git gh
+git version 2.43.0
+gh version 2.45.0
+
+$ ssh-keygen -t ed25519 -f ~/.ssh/github_key -N ""
+Generating public/private ed25519 key pair.
+Your identification has been saved in /root/.ssh/github_key
+Your public key has been saved in /root/.ssh/github_key.pub
+
+$ cat ~/.ssh/github_key.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIcIZU63rz+Y9ymfH90UV5H/3Z6scf3p28jcWzlYWKMO root@eltex-practice2-v10
+
+$ gh auth setup-git --hostname github.com
+$ mkdir -p /root/practice2-eltex-v10_clone
+$ mkdir -p module1/task1
+$ mkdir module1/task2
+$ mkdir module1/task3
+$ ls -la module1/
+total 20
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 .
+drwxr-xr-x 4 root root 4096 Aug 20 08:36 ..
+drwxr-xr-x 2 root root 4096 Aug 20 08:36 task1
+drwxr-xr-x 2 root root 4096 Aug 20 08:37 task2
+drwxr-xr-x 2 root root 4096 Aug 20 08:37 task3
+$ scp -r eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 217.71.138.1 port 22
+scp: Connection closed
+$ scp -P 44556 eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+$ ls -la module1/task1/
+total 8
+drwxr-xr-x 2 root root 4096 Aug 20 08:36 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part3.log module1/task2/
+$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part3_gt20M.log module1/task3/
+$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/report_part1.txt module1/task1/
+$ mv /tmp/eltex-v10_part.log module1/task1/
+$ mv /tmp/report_part1.txt module1/task1/
+$ mv /tmp/eltex-v10_part3.log module1/task2/
+$ ls -la module1/task1/ module1/task2/ module1/task3/
+module1/task1/:
+total 20
+drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-rw-r--r-- 1 root root 4917 Aug 20 08:45 eltex-v10_part.log
+-rw-r--r-- 1 root root  138 Aug 20 08:45 report_part1.txt
+
+module1/task2/:
+total 16
+drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-rw-r--r-- 1 root root 6955 Aug 20 08:46 eltex-v10_part3.log
+
+module1/task3/:
+total 8
+drwxr-xr-x 2 root root 4096 Aug 20 08:37 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+$ mv /tmp/eltex-v10_part3_gt20M.log module1/task3/
+$ ls -la module1/task1/ module1/task2/ module1/task3/
+module1/task1/:
+total 20
+drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-rw-r--r-- 1 root root 4917 Aug 20 08:45 eltex-v10_part.log
+-rw-r--r-- 1 root root  138 Aug 20 08:45 report_part1.txt
+
+module1/task2/:
+total 16
+drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-rw-r--r-- 1 root root 6955 Aug 20 08:46 eltex-v10_part3.log
+
+module1/task3/:
+total 12
+drwxr-xr-x 2 root root 4096 Aug 20 08:49 .
+drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-rw-r--r-- 1 root root 2206 Aug 20 08:49 eltex-v10_part3_gt20M.log
+$ git add .
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   module1/task1/eltex-v10_part.log
+	new file:   module1/task1/report_part1.txt
+	new file:   module1/task2/eltex-v10_part3.log
+	new file:   module1/task3/eltex-v10_part3_gt20M.log
+	new file:   practice2_eltex-v10_part3.log
+	new file:   practice2_root_part3.log
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   practice2_root_part3.log
+
+$ git commit -m Добавлены отчёты практики 1 в module1/task1, task2, task3
+[main 84d8b85] Добавлены отчёты практики 1 в module1/task1, task2, task3
+ 6 files changed, 436 insertions(+)
+ create mode 100644 module1/task1/eltex-v10_part.log
+ create mode 100644 module1/task1/report_part1.txt
+ create mode 100644 module1/task2/eltex-v10_part3.log
+ create mode 100644 module1/task3/eltex-v10_part3_gt20M.log
+ create mode 100644 practice2_eltex-v10_part3.log
+ create mode 100644 practice2_root_part3.log
+$ git push
+To https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+   bf396cd..84d8b85  main -> main
+$ git log --oneline
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git clone https://github.com/MYP3UJIKA111/practice2-eltex-v10.git .
+fatal: destination path '.' already exists and is not an empty directory.
+$ ls -la
+total 12
+drwxr-xr-x  2 root root 4096 Aug 20 09:00 .
+drwx------ 10 root root 4096 Aug 20 08:59 ..
+-rw-r--r--  1 root root  153 Aug 20 09:01 practice2_eltex-v10_part3.log
+$ bash -c echo '' >> README.md && echo 'Дата последнего обновления: 20.08.2026 09:18:52' >> README.md
+$ cat README.md
+# Practice 2 - Eltex
+Выполнил: Галашина Анастасия Викторовна
+Логин GitHub: MYP3UJIKA111
+
+Дата последнего обновления: 20.08.2026 09:18:52
+$ git add README.md
+$ git commit -m Добавлена дата последнего обновления
+[main 342d3fc] Добавлена дата последнего обновления
+ 1 file changed, 2 insertions(+)
+$ git push
+To https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+   84d8b85..342d3fc  main -> main
+$ git fetch
+From https://github.com/MYP3UJIKA111/practice2-eltex-v10
+   84d8b85..342d3fc  main       -> origin/main
+$ git log origin/main --oneline
+342d3fc Добавлена дата последнего обновления
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git diff main origin/main
+diff --git a/README.md b/README.md
+index 990bd8c..eec40b3 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,5 @@
+ # Practice 2 - Eltex
+ Выполнил: Галашина Анастасия Викторовна
+ Логин GitHub: MYP3UJIKA111
++
++Дата последнего обновления: 20.08.2026 09:18:52
+$ git merge origin/main
+Updating 84d8b85..342d3fc
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+$ cat README.md
+# Practice 2 - Eltex
+Выполнил: Галашина Анастасия Викторовна
+Логин GitHub: MYP3UJIKA111
+
+Дата последнего обновления: 20.08.2026 09:18:52
+$ git add -A
+$ git status --short
+D  practice2_eltex-v10_part3.log
+D  practice2_root_part3.log
+$ git commit -m Удалены лишние логи из корня репозитория
+[main bcee0c7] Удалены лишние логи из корня репозитория
+ 2 files changed, 85 deletions(-)
+ delete mode 100644 practice2_eltex-v10_part3.log
+ delete mode 100644 practice2_root_part3.log
+$ git push
+To https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+   342d3fc..bcee0c7  main -> main
+$ git log --oneline
+bcee0c7 Удалены лишние логи из корня репозитория
+342d3fc Добавлена дата последнего обновления
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git fetch
+From https://github.com/MYP3UJIKA111/practice2-eltex-v10
+   342d3fc..bcee0c7  main       -> origin/main
+$ git log origin/main --oneline
+bcee0c7 Удалены лишние логи из корня репозитория
+342d3fc Добавлена дата последнего обновления
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git diff main origin/main
+diff --git a/practice2_eltex-v10_part3.log b/practice2_eltex-v10_part3.log
+deleted file mode 100644
+index 534c06d..0000000
+--- a/practice2_eltex-v10_part3.log
++++ /dev/null
+@@ -1,20 +0,0 @@
+-$ git init
+-Initialized empty Git repository in /root/practice2-eltex-v10/.git/
+-$ git add README.md
+-$ git commit -m Initial commit: добавлен README.md
+-[main (root-commit) bf396cd] Initial commit: добавлен README.md
+- 1 file changed, 3 insertions(+)
+- create mode 100644 README.md
+-$ git branch -M main
+-$ git remote add origin https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+-$ git status
+-On branch main
+-Untracked files:
+-  (use "git add <file>..." to include in what will be committed)
+-	practice2_eltex-v10_part3.log
+-
+-nothing added to commit but untracked files present (use "git add" to track)
+-$ git push -u origin main
+-To https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+- * [new branch]      main -> main
+-branch 'main' set up to track 'origin/main'.
+diff --git a/practice2_root_part3.log b/practice2_root_part3.log
+deleted file mode 100644
+index 1194530..0000000
+--- a/practice2_root_part3.log
++++ /dev/null
+@@ -1,65 +0,0 @@
+-$ mkdir -p module1/task1
+-$ mkdir module1/task2
+-$ mkdir module1/task3
+-$ ls -la module1/
+-total 20
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 .
+-drwxr-xr-x 4 root root 4096 Aug 20 08:36 ..
+-drwxr-xr-x 2 root root 4096 Aug 20 08:36 task1
+-drwxr-xr-x 2 root root 4096 Aug 20 08:37 task2
+-drwxr-xr-x 2 root root 4096 Aug 20 08:37 task3
+-$ scp -r eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+-kex_exchange_identification: read: Connection reset by peer
+-Connection reset by 217.71.138.1 port 22
+-scp: Connection closed
+-$ scp -P 44556 eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+-$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part.log module1/task1/
+-$ ls -la module1/task1/
+-total 8
+-drwxr-xr-x 2 root root 4096 Aug 20 08:36 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part3.log module1/task2/
+-$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/eltex-v10_part3_gt20M.log module1/task3/
+-$ scp -P 44556 -o StrictHostKeyChecking=no eltex-v10@217.71.138.1:~/report_part1.txt module1/task1/
+-$ mv /tmp/eltex-v10_part.log module1/task1/
+-$ mv /tmp/report_part1.txt module1/task1/
+-$ mv /tmp/eltex-v10_part3.log module1/task2/
+-$ ls -la module1/task1/ module1/task2/ module1/task3/
+-module1/task1/:
+-total 20
+-drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+--rw-r--r-- 1 root root 4917 Aug 20 08:45 eltex-v10_part.log
+--rw-r--r-- 1 root root  138 Aug 20 08:45 report_part1.txt
+-
+-module1/task2/:
+-total 16
+-drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+--rw-r--r-- 1 root root 6955 Aug 20 08:46 eltex-v10_part3.log
+-
+-module1/task3/:
+-total 8
+-drwxr-xr-x 2 root root 4096 Aug 20 08:37 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+-$ mv /tmp/eltex-v10_part3_gt20M.log module1/task3/
+-$ ls -la module1/task1/ module1/task2/ module1/task3/
+-module1/task1/:
+-total 20
+-drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+--rw-r--r-- 1 root root 4917 Aug 20 08:45 eltex-v10_part.log
+--rw-r--r-- 1 root root  138 Aug 20 08:45 report_part1.txt
+-
+-module1/task2/:
+-total 16
+-drwxr-xr-x 2 root root 4096 Aug 20 08:47 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+--rw-r--r-- 1 root root 6955 Aug 20 08:46 eltex-v10_part3.log
+-
+-module1/task3/:
+-total 12
+-drwxr-xr-x 2 root root 4096 Aug 20 08:49 .
+-drwxr-xr-x 5 root root 4096 Aug 20 08:37 ..
+--rw-r--r-- 1 root root 2206 Aug 20 08:49 eltex-v10_part3_gt20M.log
+-$ git add .
+$ git merge origin/main
+Updating 342d3fc..bcee0c7
+Fast-forward
+ practice2_eltex-v10_part3.log | 20 -------------
+ practice2_root_part3.log      | 65 -------------------------------------------
+ 2 files changed, 85 deletions(-)
+ delete mode 100644 practice2_eltex-v10_part3.log
+ delete mode 100644 practice2_root_part3.log
+$ cat README.md
+# Practice 2 - Eltex
+Выполнил: Галашина Анастасия Викторовна
+Логин GitHub: MYP3UJIKA111
+
+Дата последнего обновления: 20.08.2026 09:18:52
+$ ls -la
+total 20
+drwxr-xr-x  4 root root 4096 Aug 20 09:28 .
+drwx------ 11 root root 4096 Aug 20 09:15 ..
+drwxr-xr-x  8 root root 4096 Aug 20 09:31 .git
+drwxr-xr-x  5 root root 4096 Aug 20 09:15 module1
+-rw-r--r--  1 root root  201 Aug 20 09:20 README.md
+$ mkdir -p module2/task1 module2/task2 module2/task3
+$ cp /root/practice2/practice2_eltex-v10_part1.log module2/task1/
+$ cp /root/practice2/practice2_eltex-v10_part2.log module2/task2/
+$ cp /root/practice2/practice2_eltex-v10_part3.log module2/task3/
+$ ls -la module2/task1 module2/task2 module2/task3
+module2/task1:
+total 24
+drwxr-xr-x 2 root root  4096 Aug 20 09:41 .
+drwxr-xr-x 5 root root  4096 Aug 20 09:41 ..
+-rw-r--r-- 1 root root 12740 Aug 20 09:41 practice2_eltex-v10_part1.log
+
+module2/task2:
+total 24
+drwxr-xr-x 2 root root  4096 Aug 20 09:41 .
+drwxr-xr-x 5 root root  4096 Aug 20 09:41 ..
+-rw-r--r-- 1 root root 14961 Aug 20 09:41 practice2_eltex-v10_part2.log
+
+module2/task3:
+total 28
+drwxr-xr-x 2 root root  4096 Aug 20 09:41 .
+drwxr-xr-x 5 root root  4096 Aug 20 09:41 ..
+-rw-r--r-- 1 root root 18485 Aug 20 09:41 practice2_eltex-v10_part3.log
+$ git add .
+$ git status --short
+A  module2/task1/practice2_eltex-v10_part1.log
+A  module2/task2/practice2_eltex-v10_part2.log
+A  module2/task3/practice2_eltex-v10_part3.log
+$ git commit -m Добавлены отчёты практики 2 в module2/task1, task2, task3
+[main 9fae8f3] Добавлены отчёты практики 2 в module2/task1, task2, task3
+ 3 files changed, 960 insertions(+)
+ create mode 100644 module2/task1/practice2_eltex-v10_part1.log
+ create mode 100644 module2/task2/practice2_eltex-v10_part2.log
+ create mode 100644 module2/task3/practice2_eltex-v10_part3.log
+$ git push
+To https://github.com/MYP3UJIKA111/practice2-eltex-v10.git
+   bcee0c7..9fae8f3  main -> main
+$ git log --oneline
+9fae8f3 Добавлены отчёты практики 2 в module2/task1, task2, task3
+bcee0c7 Удалены лишние логи из корня репозитория
+342d3fc Добавлена дата последнего обновления
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git fetch
+From https://github.com/MYP3UJIKA111/practice2-eltex-v10
+   bcee0c7..9fae8f3  main       -> origin/main
+$ git log origin/main --oneline
+9fae8f3 Добавлены отчёты практики 2 в module2/task1, task2, task3
+bcee0c7 Удалены лишние логи из корня репозитория
+342d3fc Добавлена дата последнего обновления
+84d8b85 Добавлены отчёты практики 1 в module1/task1, task2, task3
+bf396cd Initial commit: добавлен README.md
+$ git diff main origin/main --stat
+ module2/task1/practice2_eltex-v10_part1.log | 291 +++++++++++++++++++
+ module2/task2/practice2_eltex-v10_part2.log | 236 +++++++++++++++
+ module2/task3/practice2_eltex-v10_part3.log | 433 ++++++++++++++++++++++++++++
+ 3 files changed, 960 insertions(+)
+$ git merge origin/main
+Updating bcee0c7..9fae8f3
+Fast-forward
+ module2/task1/practice2_eltex-v10_part1.log | 291 +++++++++++++++++++
+ module2/task2/practice2_eltex-v10_part2.log | 236 +++++++++++++++
+ module2/task3/practice2_eltex-v10_part3.log | 433 ++++++++++++++++++++++++++++
+ 3 files changed, 960 insertions(+)
+ create mode 100644 module2/task1/practice2_eltex-v10_part1.log
+ create mode 100644 module2/task2/practice2_eltex-v10_part2.log
+ create mode 100644 module2/task3/practice2_eltex-v10_part3.log
+$ ls -la module2/
+total 20
+drwxr-xr-x 5 root root 4096 Aug 20 09:43 .
+drwxr-xr-x 5 root root 4096 Aug 20 09:43 ..
+drwxr-xr-x 2 root root 4096 Aug 20 09:43 task1
+drwxr-xr-x 2 root root 4096 Aug 20 09:43 task2
+drwxr-xr-x 2 root root 4096 Aug 20 09:43 task3

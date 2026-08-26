@@ -1,0 +1,291 @@
+=== Раздел 1, server2: пользователи и группы ===
+$ useradd -m -s /bin/bash user1
+пароль user1 задан
+$ id user1
+uid=1001(user1) gid=1001(user1) groups=1001(user1)
+$ grep ^user1: /etc/passwd
+user1:x:1001:1001::/home/user1:/bin/bash
+$ adduser --disabled-password --gecos  user2
+info: Adding user `user2' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user2' (1002) ...
+info: Adding new user `user2' (1002) with group `user2 (1002)' ...
+info: Creating home directory `/home/user2' ...
+info: Copying files from `/etc/skel' ...
+info: Adding new user `user2' to supplemental / extra groups `users' ...
+info: Adding user `user2' to group `users' ...
+$ adduser --disabled-password --gecos  user3
+info: Adding user `user3' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user3' (1003) ...
+info: Adding new user `user3' (1003) with group `user3 (1003)' ...
+info: Creating home directory `/home/user3' ...
+info: Copying files from `/etc/skel' ...
+info: Adding new user `user3' to supplemental / extra groups `users' ...
+info: Adding user `user3' to group `users' ...
+пароль user2 задан
+пароль user3 задан
+$ id user2
+uid=1002(user2) gid=1002(user2) groups=1002(user2),100(users)
+$ id user3
+uid=1003(user3) gid=1003(user3) groups=1003(user3),100(users)
+$ usermod -s /usr/sbin/nologin user3
+$ grep ^user3: /etc/passwd
+user3:x:1003:1003:,,,:/home/user3:/usr/sbin/nologin
+$ su user3 -c whoami
+This account is currently not available.
+$ su -s /bin/bash user3 -c whoami; echo "shell=$SHELL"
+user3
+shell=/bin/bash
+$ groupadd practice2_group
+$ usermod -aG practice2_group user1
+$ usermod -aG practice2_group user2
+$ usermod -aG practice2_group user3
+$ grep practice2_group /etc/group
+practice2_group:x:1004:user1,user2,user3
+$ bash -c groups user1; groups user2; groups user3
+user1 : user1 practice2_group
+user2 : user2 users practice2_group
+user3 : user3 users practice2_group
+$ mkdir -p /opt/share
+$ chown root:practice2_group /opt/share
+$ chmod 2770 /opt/share
+$ ls -ld /opt/share
+drwxrws--- 2 root practice2_group 4096 Aug 19 15:48 /opt/share
+$ bash -c echo "umask 027" >> /home/user1/.bashrc
+$ su - user1 -c umask
+0002
+$ su - user1 -c touch /opt/share/u1_umask_test; ls -l /opt/share/u1_umask_test
+-rw-rw-r-- 1 user1 practice2_group 0 Aug 19 15:49 /opt/share/u1_umask_test
+$ bash -c echo "umask 027" >> /home/user1/.profile
+$ su - user1 -c umask
+0027
+$ su - user1 -c rm -f /opt/share/u1_umask_test; touch /opt/share/u1_umask_test; ls -l /opt/share/u1_umask_test
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:52 /opt/share/u1_umask_test
+$ su - user1 -c touch /opt/share/file_u1
+$ su - user2 -c touch /opt/share/file_u2
+$ su -s /bin/bash user3 -c touch /opt/share/file_u3
+$ ls -l /opt/share
+total 0
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:54 file_u1
+-rw-rw-r-- 1 user2 practice2_group 0 Aug 19 15:54 file_u2
+-rw-rw-r-- 1 user3 practice2_group 0 Aug 19 15:54 file_u3
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:52 u1_umask_test
+$ su - user1 -c rm -f /opt/share/file_u2 && echo "user1 УДАЛИЛ чужой файл (sticky нет)"
+user1 УДАЛИЛ чужой файл (sticky нет)
+$ ls -l /opt/share
+total 0
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:54 file_u1
+-rw-rw-r-- 1 user3 practice2_group 0 Aug 19 15:54 file_u3
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:52 u1_umask_test
+$ chmod +t /opt/share
+$ ls -ld /opt/share
+drwxrws--T 2 root practice2_group 4096 Aug 19 15:55 /opt/share
+$ su - user2 -c touch /opt/share/file_u2
+$ su - user1 -c rm -f /opt/share/file_u2
+rm: cannot remove '/opt/share/file_u2': Operation not permitted
+$ su - user2 -c rm -f /opt/share/file_u2 && echo "user2 удалил СВОЙ файл"
+user2 удалил СВОЙ файл
+$ ls -l /opt/share
+total 0
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:54 file_u1
+-rw-rw-r-- 1 user3 practice2_group 0 Aug 19 15:54 file_u3
+-rw-r----- 1 user1 practice2_group 0 Aug 19 15:52 u1_umask_test
+$ bash -c command -v dmesg
+/usr/bin/dmesg
+$ bash -c echo "user1 ALL=(ALL) NOPASSWD: $(command -v dmesg)" > /etc/sudoers.d/user1
+$ chmod 440 /etc/sudoers.d/user1
+$ cat /etc/sudoers.d/user1
+user1 ALL=(ALL) NOPASSWD: /usr/bin/dmesg
+$ su - user1 -c sudo -n dmesg | head -3
+[    0.000000] Linux version 6.8.0-137-generic (buildd@lcy02-amd64-064) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #137-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:28:23 UTC 2026 (Ubuntu 6.8.0-137.137-generic 6.8.12)
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-137-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.000000] KERNEL supported cpus:
+$ chmod 4755 /usr/local/bin/dmesg_suid.sh
+$ ls -l /usr/local/bin/dmesg_suid.sh
+-rwsr-xr-x 1 root root 37 Aug 19 16:44 /usr/local/bin/dmesg_suid.sh
+$ su - user2 -c /usr/local/bin/dmesg_suid.sh | head -3
+dmesg: read kernel buffer failed: Operation not permitted
+$ su - user2 -c dmesg | head -3
+dmesg: read kernel buffer failed: Operation not permitted
+$ chage -M 10 user1
+$ chage -M 10 user2
+$ chage -M 10 user3
+$ bash -c chage -l user1 | grep -i "maximum"; chage -l user2 | grep -i "maximum"; chage -l user3 | grep -i "maximum"
+Maximum number of days between password change		: 10
+Maximum number of days between password change		: 10
+Maximum number of days between password change		: 10
+$ bash -c echo "Галашина Анастасия Викторовна" > /etc/motd
+$ cat /etc/motd
+Галашина Анастасия Викторовна
+$ mkdir -p /root/etc_backup
+$ rsync -a /etc/ /root/etc_backup/
+$ bash -c ls /root/etc_backup | head -5; du -sh /root/etc_backup
+adduser.conf
+alternatives
+apparmor
+apparmor.d
+apport
+6.1M	/root/etc_backup
+$ bash -c command -v 7z || apt-get install -y p7zip-full
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  7zip
+Suggested packages:
+  7zip-standalone 7zip-rar
+The following NEW packages will be installed:
+  7zip p7zip-full
+0 upgraded, 2 newly installed, 0 to remove and 83 not upgraded.
+Need to get 1,849 kB of archives.
+After this operation, 6,318 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu noble/universe amd64 7zip amd64 23.01+dfsg-11 [1,846 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu noble/universe amd64 p7zip-full all 16.02+transitional.1 [2,500 B]
+Fetched 1,849 kB in 1s (3,146 kB/s)
+Selecting previously unselected package 7zip.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 125676 files and directories currently installed.)
+Preparing to unpack .../7zip_23.01+dfsg-11_amd64.deb ...
+Unpacking 7zip (23.01+dfsg-11) ...
+Selecting previously unselected package p7zip-full.
+Preparing to unpack .../p7zip-full_16.02+transitional.1_all.deb ...
+Unpacking p7zip-full (16.02+transitional.1) ...
+Setting up 7zip (23.01+dfsg-11) ...
+Setting up p7zip-full (16.02+transitional.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+$ tar -czf /root/etc_backup.tar.gz -C /root etc_backup
+$ tar -cjf /root/etc_backup.tar.bz2 -C /root etc_backup
+/bin/sh: 1: bzip2: not found
+tar: /root/etc_backup.tar.bz2: Cannot write: Broken pipe
+tar: Child returned status 127
+tar: Error is not recoverable: exiting now
+$ bash -c command -v bzip2 || apt-get install -y bzip2
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  bzip2-doc
+The following NEW packages will be installed:
+  bzip2
+0 upgraded, 1 newly installed, 0 to remove and 83 not upgraded.
+Need to get 34.5 kB of archives.
+After this operation, 112 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 bzip2 amd64 1.0.8-5.1build0.1 [34.5 kB]
+Fetched 34.5 kB in 0s (208 kB/s)
+Selecting previously unselected package bzip2.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 125702 files and directories currently installed.)
+Preparing to unpack .../bzip2_1.0.8-5.1build0.1_amd64.deb ...
+Unpacking bzip2 (1.0.8-5.1build0.1) ...
+Setting up bzip2 (1.0.8-5.1build0.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+$ tar -cjf /root/etc_backup.tar.bz2 -C /root etc_backup
+$ 7z a /root/etc_backup.7z /root/etc_backup
+
+7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:1024
+
+Scanning the drive:
+
+WARNING: errno=2 : No such file or directory
+/root/etc_backup/os-release
+
+
+WARNING: errno=2 : No such file or directory
+/root/etc_backup/resolv.conf
+
+
+WARNING: errno=2 : No such file or directory
+/root/etc_backup/mtab
+
+244 folders, 1460 files, 38597095 bytes (37 MiB)
+
+Creating archive: /root/etc_backup.7z
+
+Add new data to archive: 244 folders, 1460 files, 38597095 bytes (37 MiB)
+
+
+Files read from disk: 1447
+Archive size: 4618784 bytes (4511 KiB)
+
+Scan WARNINGS for files and folders:
+
+/root/etc_backup/os-release : errno=2 : No such file or directory
+/root/etc_backup/resolv.conf : errno=2 : No such file or directory
+/root/etc_backup/mtab : errno=2 : No such file or directory
+----------------
+Scan WARNINGS: 3
+$ ls -lh /root/etc_backup.tar.gz /root/etc_backup.tar.bz2 /root/etc_backup.7z
+-rw-r--r-- 1 root root 4.5M Aug 19 17:08 /root/etc_backup.7z
+-rw-r--r-- 1 root root 527K Aug 19 17:08 /root/etc_backup.tar.bz2
+-rw-r--r-- 1 root root 564K Aug 19 16:57 /root/etc_backup.tar.gz
+$ bash -c echo "Дата: $(date "+%d.%m.%Y %H:%M:%S")" >> /etc/motd
+$ cat /etc/motd
+Галашина Анастасия Викторовна
+Дата: 19.08.2026 17:22:53
+$ rsync -a /etc/ /root/etc_backup/
+$ tar -czf /root/etc_backup.tar.gz -C /root etc_backup
+$ ls -lh /root/etc_backup.tar.gz
+-rw-r--r-- 1 root root 564K Aug 19 17:24 /root/etc_backup.tar.gz
+$ mkdir -p /tmp/bz2_check
+$ tar -xjf /root/etc_backup.tar.bz2 -C /tmp/bz2_check
+$ diff -r /tmp/bz2_check/etc_backup /root/etc_backup
+diff -r /tmp/bz2_check/etc_backup/motd /root/etc_backup/motd
+1a2
+> Дата: 19.08.2026 17:22:53
+diff: /tmp/bz2_check/etc_backup/mtab: No such file or directory
+diff: /root/etc_backup/mtab: No such file or directory
+diff: /tmp/bz2_check/etc_backup/os-release: No such file or directory
+diff: /root/etc_backup/os-release: No such file or directory
+diff: /tmp/bz2_check/etc_backup/resolv.conf: No such file or directory
+diff: /root/etc_backup/resolv.conf: No such file or directory
+$ mkdir -p /root/etc_backup_gzip /root/etc_backup_7zip
+$ tar -xzf /root/etc_backup.tar.gz -C /root/etc_backup_gzip --strip-components=1
+$ 7z x /root/etc_backup.7z -o/root/etc_backup_7zip -y
+
+7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:1024
+
+Scanning the drive for archives:
+1 file, 4618784 bytes (4511 KiB)
+
+Extracting archive: /root/etc_backup.7z
+--
+Path = /root/etc_backup.7z
+Type = 7z
+Physical Size = 4618784
+Headers Size = 20544
+Method = LZMA2:24 BCJ
+Solid = +
+Blocks = 2
+
+Everything is Ok
+
+Folders: 244
+Files: 1460
+Size:       38597095
+Compressed: 4618784
+$ bash -c find /root/etc_backup_7zip -name motd
+/root/etc_backup_7zip/etc_backup/motd
+$ diff /root/etc_backup_gzip/motd /root/etc_backup_7zip/etc_backup/motd
+2d1
+< Дата: 19.08.2026 17:22:53

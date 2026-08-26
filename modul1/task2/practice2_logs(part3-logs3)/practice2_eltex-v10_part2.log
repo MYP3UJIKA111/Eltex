@@ -1,0 +1,236 @@
+=== Раздел 2 ===
+$ bash -c journalctl -b -o short-iso | head -n 1
+2026-08-12T08:43:25+00:00 localhost kernel: Linux version 6.8.0-137-generic (buildd@lcy02-amd64-064) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #137-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:28:23 UTC 2026 (Ubuntu 6.8.0-137.137-generic 6.8.12)
+BOOT=2026-08-12T08:43:25+00:00 UNTIL=2026-08-12T08:43:45+0000
+$ bash -c journalctl -b --since '2026-08-12T08:43:25+00:00' --until '2026-08-12T08:43:45+0000' | head -n 30
+Failed to parse timestamp: 2026-08-12T08:43:45+0000
+$ bash -c journalctl -b --since '2026-08-12T08:43:25+00:00' --until '2026-08-12T08:43:45+0000' | wc -l
+Failed to parse timestamp: 2026-08-12T08:43:45+0000
+0
+SINCE=2026-08-12 08:43:25 UNTIL=2026-08-12 08:43:45
+$ bash -c journalctl -b --since '2026-08-12 08:43:25' --until '2026-08-12 08:43:45' | head -n 30
+Aug 12 08:43:25 localhost kernel: Linux version 6.8.0-137-generic (buildd@lcy02-amd64-064) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #137-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:28:23 UTC 2026 (Ubuntu 6.8.0-137.137-generic 6.8.12)
+Aug 12 08:43:25 localhost kernel: Command line: BOOT_IMAGE=/vmlinuz-6.8.0-137-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+Aug 12 08:43:25 localhost kernel: KERNEL supported cpus:
+Aug 12 08:43:25 localhost kernel:   Intel GenuineIntel
+Aug 12 08:43:25 localhost kernel:   AMD AuthenticAMD
+Aug 12 08:43:25 localhost kernel:   Hygon HygonGenuine
+Aug 12 08:43:25 localhost kernel:   Centaur CentaurHauls
+Aug 12 08:43:25 localhost kernel:   zhaoxin   Shanghai  
+Aug 12 08:43:25 localhost kernel: BIOS-provided physical RAM map:
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x00000000000f0000-0x00000000000fffff] reserved
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x0000000000100000-0x00000000bffd9fff] usable
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x00000000bffda000-0x00000000bfffffff] reserved
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x00000000feffc000-0x00000000feffffff] reserved
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x00000000fffc0000-0x00000000ffffffff] reserved
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x0000000100000000-0x000000013fffffff] usable
+Aug 12 08:43:25 localhost kernel: BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] reserved
+Aug 12 08:43:25 localhost kernel: NX (Execute Disable) protection: active
+Aug 12 08:43:25 localhost kernel: APIC: Static calls initialized
+Aug 12 08:43:25 localhost kernel: SMBIOS 2.8 present.
+Aug 12 08:43:25 localhost kernel: DMI: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+Aug 12 08:43:25 localhost kernel: Hypervisor detected: KVM
+Aug 12 08:43:25 localhost kernel: kvm-clock: Using msrs 4b564d01 and 4b564d00
+Aug 12 08:43:25 localhost kernel: kvm-clock: using sched offset of 42233798609 cycles
+Aug 12 08:43:25 localhost kernel: clocksource: kvm-clock: mask: 0xffffffffffffffff max_cycles: 0x1cd42e4dffb, max_idle_ns: 881590591483 ns
+Aug 12 08:43:25 localhost kernel: tsc: Detected 3399.998 MHz processor
+Aug 12 08:43:25 localhost kernel: e820: update [mem 0x00000000-0x00000fff] usable ==> reserved
+Aug 12 08:43:25 localhost kernel: e820: remove [mem 0x000a0000-0x000fffff] usable
+Aug 12 08:43:25 localhost kernel: AGP: No AGP bridge found
+$ bash -c journalctl -b --since '2026-08-12 08:43:25' --until '2026-08-12 08:43:45' | wc -l
+881
+AUTH_LOG=/var/log/auth.log
+$ bash -c awk '{ s=$5; sub(/^[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +/, ""); print s ": " $0 }' /var/log/auth.log | sed -E 's/\[[0-9]+\]//' | sort > /tmp/auth_src.txt
+$ head -n 20 /tmp/auth_src.txt
+1241: logged out. Waiting for processes to exit.
+1246: logged out. Waiting for processes to exit.
+1248: logged out. Waiting for processes to exit.
+1250: logged out. Waiting for processes to exit.
+1252: logged out. Waiting for processes to exit.
+1257: logged out. Waiting for processes to exit.
+1259: logged out. Waiting for processes to exit.
+1272: logged out. Waiting for processes to exit.
+1281: logged out. Waiting for processes to exit.
+1283: logged out. Waiting for processes to exit.
+1285: logged out. Waiting for processes to exit.
+added: to /etc/group: name=practice2_group, GID=1004
+added: to /etc/group: name=user2, GID=1002
+added: to /etc/group: name=user3, GID=1003
+added: to /etc/gshadow: name=practice2_group
+added: to /etc/gshadow: name=user2
+added: to /etc/gshadow: name=user3
+closed: by 172.16.9.184 port 54440 [preauth]
+closed: by authenticating user root 172.16.8.4 port 36836 [preauth]
+closed: by authenticating user root 172.16.8.4 port 36844 [preauth]
+$ bash -c awk '{ src=$5; sub(/\[[0-9]+\]:?$/, "", src); msg=""; for(i=6;i<=NF;i++) msg=msg" "$i; print src ": " msg }' /var/log/auth.log | sed 's/^ //' | sort > /tmp/auth_src.txt
+$ head -n 20 /tmp/auth_src.txt
+1241:  logged out. Waiting for processes to exit.
+1246:  logged out. Waiting for processes to exit.
+1248:  logged out. Waiting for processes to exit.
+1250:  logged out. Waiting for processes to exit.
+1252:  logged out. Waiting for processes to exit.
+1257:  logged out. Waiting for processes to exit.
+1259:  logged out. Waiting for processes to exit.
+1272:  logged out. Waiting for processes to exit.
+1281:  logged out. Waiting for processes to exit.
+1283:  logged out. Waiting for processes to exit.
+1285:  logged out. Waiting for processes to exit.
+added:  to /etc/group: name=practice2_group, GID=1004
+added:  to /etc/group: name=user2, GID=1002
+added:  to /etc/group: name=user3, GID=1003
+added:  to /etc/gshadow: name=practice2_group
+added:  to /etc/gshadow: name=user2
+added:  to /etc/gshadow: name=user3
+closed:  by 172.16.9.184 port 54440 [preauth]
+closed:  by authenticating user root 172.16.8.4 port 36836 [preauth]
+closed:  by authenticating user root 172.16.8.4 port 36844 [preauth]
+$ head -n 10 /var/log/auth.log
+2026-08-16T00:05:01.954049+00:00 localhost CRON[9712]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-08-16T00:05:02.074512+00:00 localhost CRON[9712]: pam_unix(cron:session): session closed for user root
+2026-08-16T00:15:01.957992+00:00 localhost CRON[9732]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-08-16T00:15:01.959240+00:00 localhost CRON[9732]: pam_unix(cron:session): session closed for user root
+2026-08-16T00:17:01.961385+00:00 localhost CRON[9736]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-08-16T00:17:02.311002+00:00 localhost CRON[9736]: pam_unix(cron:session): session closed for user root
+2026-08-16T00:25:01.965529+00:00 localhost CRON[9746]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-08-16T00:25:01.970178+00:00 localhost CRON[9746]: pam_unix(cron:session): session closed for user root
+2026-08-16T00:35:01.970276+00:00 localhost CRON[9787]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-08-16T00:35:01.971367+00:00 localhost CRON[9787]: pam_unix(cron:session): session closed for user root
+$ bash -c awk '{ src=$3; sub(/\[[0-9]+\]:$/, "", src); msg=""; for(i=4;i<=NF;i++) msg=msg" "$i; print src ": " msg }' /var/log/auth.log | sed 's/^ //' | sort > /tmp/auth_src.txt
+$ head -n 20 /tmp/auth_src.txt
+chage:  changed password expiry for user1
+chage:  changed password expiry for user2
+chage:  changed password expiry for user3
+chfn:  changed user 'user2' information
+chfn:  changed user 'user3' information
+chpasswd:  pam_unix(chpasswd:chauthtok): password changed for user1
+chpasswd:  pam_unix(chpasswd:chauthtok): password changed for user2
+chpasswd:  pam_unix(chpasswd:chauthtok): password changed for user3
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+CRON:  pam_unix(cron:session): session closed for user root
+$ bash -c sed -E 's/: .*//' /tmp/auth_src.txt | sort | uniq -c | sort -rn | head -n 20
+   1406 CRON
+     68 sshd
+     48 su
+     37 systemd-logind
+     19 userdel
+      9 groupadd
+      7 usermod
+      7 (systemd):
+      4 useradd
+      3 sudo:
+      3 groupdel
+      3 chpasswd
+      3 chage
+      2 gpasswd
+      2 chfn
+      1 nologin:
+$ bash -c awk '{ src=$3; msg=""; for(i=4;i<=NF;i++) msg = (msg=="" ? $i : msg " " $i); print src " " msg }' /var/log/auth.log | sed -E 's/\[[0-9]+\]:/:/' | sort > /tmp/auth_src.txt
+$ head -n 20 /tmp/auth_src.txt
+chage: changed password expiry for user1
+chage: changed password expiry for user2
+chage: changed password expiry for user3
+chfn: changed user 'user2' information
+chfn: changed user 'user3' information
+chpasswd: pam_unix(chpasswd:chauthtok): password changed for user1
+chpasswd: pam_unix(chpasswd:chauthtok): password changed for user2
+chpasswd: pam_unix(chpasswd:chauthtok): password changed for user3
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+CRON: pam_unix(cron:session): session closed for user root
+$ bash -c awk -f /tmp/nologin.awk /etc/group /etc/passwd | sort -t, -k1,1 -rn
+65534, nobody, nogroup
+1003, user3, user3, users practice2_group
+998, systemd-network, systemd-network
+997, systemd-timesync, systemd-timesync
+992, systemd-resolve, systemd-resolve
+991, polkitd, polkitd
+989, fwupd-refresh, fwupd-refresh
+109, sshd, nogroup
+108, usbmux, plugdev
+107, landscape, landscape
+105, tcpdump, tcpdump
+104, uuidd, uuidd
+103, syslog, syslog, adm
+101, messagebus, messagebus
+42, _apt, nogroup
+39, irc, irc
+38, list, list
+34, backup, backup
+33, www-data, www-data
+13, proxy, proxy
+10, uucp, uucp
+9, news, news
+8, mail, mail
+7, lp, lp
+6, man, man
+5, games, games
+3, sys, sys
+2, bin, bin
+1, daemon, daemon
+$ bash -c dmesg | grep -i kernel | head -n 20
+[    0.000000] KERNEL supported cpus:
+[    0.096687] Booting paravirtualized kernel on KVM
+[    0.096917] Kernel command line: BOOT_IMAGE=/vmlinuz-6.8.0-137-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.198129] Memory: 3925876K/4193760K available (22528K kernel code, 4441K rwdata, 14428K rodata, 4932K init, 4776K bss, 267624K reserved, 0K cma-reserved)
+[    0.356322] DMA: preallocated 512 KiB GFP_KERNEL pool for atomic allocations
+[    0.356349] DMA: preallocated 512 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.356381] DMA: preallocated 512 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.704701] Loaded X.509 cert 'Build time autogenerated kernel key: 4a473740fca40948019ddafa8d6b1656106fd311'
+[    0.714279] Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing 2025 Kmod: 4627603d2357a2a3f81006370894c221175893e9'
+[    0.718091] Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing: 88f752e560a1e0737e31163a466ad7b70a850c19'
+[    1.323669] Loaded X.509 cert 'Build time autogenerated kernel key: 4a473740fca40948019ddafa8d6b1656106fd311'
+[    1.365340] Freeing unused kernel image (initmem) memory: 4932K
+[    1.365924] Write protecting the kernel read-only data: 38912k
+[    1.368192] Freeing unused kernel image (rodata/data gap) memory: 1956K
+[   54.134196] systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+[   54.157939] systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+[   54.167932] systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+[   54.311282] systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+[   54.318029] systemd[1]: Starting modprobe@dm_mod.service - Load Kernel Module dm_mod...
+[   54.321672] systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+$ bash -c dmesg | grep -ci kernel
+25
+$ bash -c ls -l /var/log/kern.log 2>/dev/null || echo "kern.log не найден"
+-rw-r----- 1 syslog adm 153 Aug 19 06:56 /var/log/kern.log
+$ wc -l /var/log/kern.log
+1 /var/log/kern.log
+$ bash -c journalctl -k | wc -l
+737
+$ awk -f /tmp/apt_fmt.awk /var/log/apt/history.log
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-01  06:49:03 ; End-Date: 2026-08-01  06:49:07
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-01  06:49:09 ; End-Date: 2026-08-01  06:49:13
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-01  06:49:15 ; End-Date: 2026-08-01  06:49:26
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:19:57 ; End-Date: 2026-08-07  06:20:17
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:20:19 ; End-Date: 2026-08-07  06:22:38
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:22:39 ; End-Date: 2026-08-07  06:22:50
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:22:52 ; End-Date: 2026-08-07  06:23:02
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:04 ; End-Date: 2026-08-07  06:23:05
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:06 ; End-Date: 2026-08-07  06:23:10
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:12 ; End-Date: 2026-08-07  06:23:14
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:16 ; End-Date: 2026-08-07  06:23:18
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:20 ; End-Date: 2026-08-07  06:23:21
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-07  06:23:23 ; End-Date: 2026-08-07  06:23:24
+Commandline: /usr/bin/unattended-upgrade ; Start-Date: 2026-08-11  06:35:49 ; End-Date: 2026-08-11  06:36:55
+Commandline: apt-get install -y p7zip-full ; Start-Date: 2026-08-19  16:54:48 ; End-Date: 2026-08-19  16:54:58
+Commandline: apt-get install -y bzip2 ; Start-Date: 2026-08-19  16:58:11 ; End-Date: 2026-08-19  16:58:15

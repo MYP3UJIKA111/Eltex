@@ -1,0 +1,191 @@
+=== Практика 3, Раздел 2 ===
+$ bash -n cuckoo.sh
+$ nohup ./cuckoo.sh
+nohup: ignoring input
+$ nohup ./cuckoo.sh
+nohup: ignoring input
+$ pgrep -af cuckoo.sh
+39839 /bin/bash ./cuckoo.sh
+39848 /bin/bash ./cuckoo.sh
+$ ls -l /tmp/run/
+total 0
+prw-r----- 1 user1 user1 0 Aug 23 06:19 cuckoo.pid
+$ cat cuckoo.log
+2026-08-23 06:19:28 Startup!
+2026-08-23 06:19:45 Startup!
+$ ./template_task.sh
+я бригадир, сам не работаю
+$ ln -sf template_task.sh worker1
+$ ln -sf template_task.sh worker2
+$ ln -sf template_task.sh worker3
+$ ls -l worker1 worker2 worker3 template_task.sh
+-rwxr-x--- 1 user1 user1 744 Aug 23 06:20 template_task.sh
+lrwxrwxrwx 1 user1 user1  16 Aug 23 06:21 worker1 -> template_task.sh
+lrwxrwxrwx 1 user1 user1  16 Aug 23 06:21 worker2 -> template_task.sh
+lrwxrwxrwx 1 user1 user1  16 Aug 23 06:21 worker3 -> template_task.sh
+$ pgrep -af cuckoo.sh
+39839 /bin/bash ./cuckoo.sh
+39848 /bin/bash ./cuckoo.sh
+$ ls -l /tmp/run/
+total 0
+prw-r----- 1 user1 user1 0 Aug 23 06:19 cuckoo.pid
+$ cat cuckoo.log
+2026-08-23 06:19:28 Startup!
+2026-08-23 06:19:45 Startup!
+$ pkill -f cuckoo.sh
+$ pgrep -af cuckoo.sh
+$ pkill -f cuckoo.sh
+$ pgrep -af cuckoo.sh
+$ tail -n 2 cuckoo.log
+2026-08-23 06:34:36 Shutdown!
+2026-08-23 06:34:36 Shutdown!
+$ nohup ./cuckoo.sh
+nohup: ignoring input
+$ pgrep -af cuckoo.sh
+39932 /bin/bash ./cuckoo.sh
+$ tail -n 1 cuckoo.log
+2026-08-23 06:35:46 Startup!
+$ tail -n 5 cuckoo.log
+2026-08-23 06:19:45 Startup!
+2026-08-23 06:34:36 Shutdown!
+2026-08-23 06:34:36 Shutdown!
+2026-08-23 06:35:46 Startup!
+2026-08-23 06:37:47 proba[777] 5
+$ cat /tmp/run/reply.777
+5
+$ ln -sf template_task.sh worker1
+$ ./worker1
+$ cat report_worker1.log
+2026-08-23 06:39:21 [39949] Скрипт запущен
+2026-08-23 06:39:25 [39949] Скрипт завершился, работал 4 секунд.
+$ tail -n 2 cuckoo.log
+2026-08-23 06:37:47 proba[777] 5
+2026-08-23 06:39:21 worker1[39949] 4
+$ ln -sf template_task.sh worker2
+$ ln -sf template_task.sh worker3
+$ cat observer.conf
+cat: observer.conf: No such file or directory
+$ cat observer.conf
+Please ask your administrator.
+$ cat observer.conf
+template_task.sh
+worker1
+worker2
+worker3
+$ bash -n observer.sh
+$ ls -l observer.sh
+-rwxr-x--- 1 user1 user1 716 Aug 23 06:57 observer.sh
+$ ./observer.sh
+./observer.sh: line 14: /proc/40268/cmdline: No such file or directory
+$ bash -n observer.sh
+$ ./observer.sh
+$ cat observer.log
+2026-08-23 06:58:35 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker3 (не найден в /proc)
+2026-08-23 07:00:49 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker3 (не найден в /proc)
+$ pgrep -af worker
+4 [kworker/R-rcu_g]
+5 [kworker/R-rcu_p]
+6 [kworker/R-slub_]
+7 [kworker/R-netns]
+10 [kworker/0:0H-events_highpri]
+12 [kworker/R-mm_pe]
+26 [kworker/1:0H-events_highpri]
+28 [kworker/R-inet_]
+34 [kworker/R-write]
+39 [kworker/R-kinte]
+40 [kworker/R-kbloc]
+41 [kworker/R-blkcg]
+43 [kworker/R-tpm_d]
+44 [kworker/R-ata_s]
+45 [kworker/R-md]
+46 [kworker/R-md_bi]
+47 [kworker/R-edac-]
+48 [kworker/R-devfr]
+50 [kworker/R-quota]
+51 [kworker/1:1H-kblockd]
+54 [kworker/R-kthro]
+55 [kworker/R-acpi_]
+58 [kworker/R-scsi_]
+60 [kworker/R-scsi_]
+62 [kworker/R-scsi_]
+66 [kworker/R-mld]
+67 [kworker/0:1H-kblockd]
+68 [kworker/R-ipv6_]
+75 [kworker/R-kstrp]
+77 [kworker/u5:0]
+82 [kworker/R-crypt]
+92 [kworker/R-charg]
+165 [kworker/R-ttm]
+174 [kworker/R-kdmfl]
+200 [kworker/R-raid5]
+241 [kworker/R-ext4-]
+360 [kworker/R-kmpat]
+361 [kworker/R-kmpat]
+519 [kworker/R-ext4-]
+558 [kworker/R-cfg80]
+1038 [kworker/R-tls-s]
+39688 [kworker/u4:4-events_unbound]
+39694 [kworker/1:3-events]
+39702 [kworker/u4:1-events_unbound]
+39830 [kworker/0:2-events]
+39878 [kworker/u4:3-events_power_efficient]
+39920 [kworker/u4:0-events_unbound]
+39966 [kworker/0:3-cgroup_free]
+39986 [kworker/1:1-cgroup_release]
+41073 [kworker/0:0-cgroup_free]
+$ ls -l report_worker1.log report_worker2.log report_worker3.log
+-rw-r----- 1 user1 user1 450 Aug 23 07:00 report_worker1.log
+-rw-r----- 1 user1 user1 300 Aug 23 07:00 report_worker2.log
+-rw-r----- 1 user1 user1 300 Aug 23 07:00 report_worker3.log
+$ cat observer.log
+2026-08-23 06:58:35 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 06:58:35 Перезапуск: worker3 (не найден в /proc)
+2026-08-23 07:00:49 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 07:00:50 Перезапуск: worker3 (не найден в /proc)
+$ pgrep -af cucko
+39932 /bin/bash ./cuckoo.sh
+$ ./observer.sh
+$ tail -n 4 observer.log
+2026-08-23 08:03:34 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 08:03:34 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 08:03:34 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 08:03:34 Перезапуск: worker3 (не найден в /proc)
+$ cat observer.conf
+template_task.sh
+worker1
+worker2
+worker3
+$ crontab -l
+no crontab for user1
+$ crontab -l
+* * * * * /home/user1/practice3/observer.sh
+$ ls -l report_worker1.log report_worker2.log report_worker3.log
+-rw-r----- 1 user1 user1 1501 Aug 23 08:22 report_worker1.log
+-rw-r----- 1 user1 user1 1351 Aug 23 08:22 report_worker2.log
+-rw-r----- 1 user1 user1 1350 Aug 23 08:22 report_worker3.log
+$ tail -n 12 observer.log
+2026-08-23 08:20:01 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 08:20:01 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 08:20:02 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 08:20:02 Перезапуск: worker3 (не найден в /proc)
+2026-08-23 08:21:01 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 08:21:01 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 08:21:01 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 08:21:01 Перезапуск: worker3 (не найден в /proc)
+2026-08-23 08:22:01 Перезапуск: template_task.sh (не найден в /proc)
+2026-08-23 08:22:01 Перезапуск: worker1 (не найден в /proc)
+2026-08-23 08:22:01 Перезапуск: worker2 (не найден в /proc)
+2026-08-23 08:22:01 Перезапуск: worker3 (не найден в /proc)
+$ crontab -r
+$ crontab -l
+no crontab for user1
