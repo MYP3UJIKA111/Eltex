@@ -1,4 +1,4 @@
-obj-m += proc_module.o
+obj-m += kbleds_sysfs.o
 CC := x86_64-linux-gnu-gcc
 
 all:
